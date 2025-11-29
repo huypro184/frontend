@@ -1,5 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Login from "./page/Login";
 import Sidebar from "./components/Sidebar";
 import DashboardPage from "./page/DashboardPage";
@@ -18,15 +17,6 @@ import "react-toastify/dist/ReactToastify.css";
 
 const Layout = () => {
   const location = useLocation();
-  const navigate = useNavigate();
-
-  // REDIRECT domain root → /login
-  useEffect(() => {
-    if (location.pathname === "/") {
-      navigate("/login", { replace: true });
-    }
-  }, [location, navigate]);
-
 
   // danh sách các route muốn ẩn sidebar
   const pathsWithoutSidebar = [
@@ -50,8 +40,10 @@ const Layout = () => {
       {!hideSidebar && <Sidebar />}
       <div className="flex-1 bg-gray-50">
         <Routes>
+          {/* Redirect root "/" → /login instantly */}
+          <Route path="/" element={<Navigate to="/login" replace />} />
+
           {/* Static routes */}
-          <Route path="/" element={<DashboardPage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/project" element={<ProjectPage />} />
           <Route path="/user" element={<UserPage />} />
