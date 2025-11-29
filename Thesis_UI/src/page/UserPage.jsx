@@ -101,7 +101,7 @@ const UserPage = () => {
   // --- PROJECT DROPDOWN ---
   const loadProjects = async () => {
     try {
-      const res = await projectApi.getUnassigned(projectSearch);
+      const res = await projectApi.getUnassignedList(projectSearch);
       setAllProjects(res.data?.data?.projects || []);
     } catch (err) {
       console.log("LOAD PROJECTS ERROR:", err);

@@ -12,12 +12,23 @@ const projectApi = {
 
   delete: (id) => axiosClient.delete(`/projects/${id}`),
 
-  getUnassigned: (adminId, search = "") =>
-  axiosClient.post(`/projects/${adminId}/assign-project`, {
-      params: { search },
+  // getUnassigned: (adminId, search = "") =>
+  // axiosClient.post(`/projects/${adminId}/assign-project`, {
+  //     params: { search },
+  //   }),
+
+  // getUnassigned: () => axiosClient.get(`/projects/unassigned/projects`),
+
+  getUnassignedList: (search = "") => 
+    axiosClient.get(`/projects/unassigned/projects`, {
+      params: { search } // Truyền search lên server
     }),
 
-  getUnassigned: () => axiosClient.get(`/projects/unassigned/projects`),
+  // HÀM 2: Hàm nghiệp vụ gán dự án cho Admin (Đổi tên để tránh trùng)
+  getUnassignedForAdmin: (adminId, search = "") =>
+    axiosClient.post(`/projects/${adminId}/assign-project`, {
+      params: { search },
+    }),
 
   assignToUser: (userId, projectName) =>
   axiosClient.post(`/projects/assign-project`, {
