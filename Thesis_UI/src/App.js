@@ -1,4 +1,5 @@
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import Login from "./page/Login";
 import Sidebar from "./components/Sidebar";
 import DashboardPage from "./page/DashboardPage";
@@ -17,6 +18,15 @@ import "react-toastify/dist/ReactToastify.css";
 
 const Layout = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  // REDIRECT domain root → /login
+  useEffect(() => {
+    if (location.pathname === "/") {
+      navigate("/login", { replace: true });
+    }
+  }, [location, navigate]);
+
 
   // danh sách các route muốn ẩn sidebar
   const pathsWithoutSidebar = [
@@ -28,10 +38,8 @@ const Layout = () => {
 
   const hideSidebar = pathsWithoutSidebar.some((path) => {
     if (!path.includes(":")) {
-      // static path
       return location.pathname === path;
     } else {
-      // dynamic path: check base path trước dấu ":"
       const basePath = path.split("/:")[0];
       return location.pathname.startsWith(basePath) && location.pathname !== "/tickets";
     }
