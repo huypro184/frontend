@@ -2,7 +2,7 @@ import axiosClient from "./axiosClient";
 
 const serviceApi = {
   // SỬA DÒNG NÀY: Thêm tham số limit = 6 (mặc định)
-  getService: (page = 1, search = "", limit = 6) =>
+  getService: (page = 1, search = "", limit = 8) =>
     axiosClient.get(`/services`, {
       // Truyền limit động vào params
       params: { page, limit, search },
